@@ -3,10 +3,7 @@ package com.example.rbac_engine.entity.operations;
 import com.example.rbac_engine.entity.Permission;
 import com.example.rbac_engine.entity.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
@@ -14,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "role_permissions")
+@Builder
 public class RolePermission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,17 +3,15 @@ package com.example.rbac_engine.entity.operations;
 import com.example.rbac_engine.entity.Role;
 import com.example.rbac_engine.entity.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user_role")
+@Table(name = "user_roles")
+@Builder
 public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
