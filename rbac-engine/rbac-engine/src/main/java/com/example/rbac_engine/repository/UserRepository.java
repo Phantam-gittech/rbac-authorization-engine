@@ -19,7 +19,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             WHERE u.username = :username
             """)
     List<String> findPermissionNamesByUsername(@Param("username") String username);
-//
+
 //    @Query("""
 //            SELECT p.name FROM UserRole ur
 //            JOIN RolePermission rp ON rp.role = ur.role
@@ -27,6 +27,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //            WHERE ur.user.username = :username
 //            """)
 //    List<String> findPermissionNamesByUsername2(@Param("username") String username);
-//
+
 
 }
