@@ -6,6 +6,7 @@ import com.example.rbac_engine.service.PermissionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,7 @@ public class PermissionController {
 
     private final PermissionService permissionService;
 
+    @PreAuthorize("hasPermission(null, 'CREATE_PERMISSION')")
     @PostMapping
     public ResponseEntity<PermissionResponse> addPermission(@Valid @RequestBody PermissionRequest permissionRequest){
         PermissionResponse response = permissionService.createPermission(permissionRequest);

@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ public class UserController {
 
     private final UserRoleService userRoleService;
 
+    @PreAuthorize("hasPermission(null, 'ASSIGN_ROLE_TO_USER')")
     @PostMapping("/{userId}/roles/{roleId}")
     public ResponseEntity<UserRoleResponse> assignRoleToUser(
             @Positive(message = "Invalid ID format!") @PathVariable Long userId,
