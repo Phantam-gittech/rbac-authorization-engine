@@ -38,7 +38,27 @@ moving to the next. Docs are being kept honest about this deviation.
 This also pulled in work originally scoped for later phases — validation
 (Phase 6) and Global Exception Handling (Phase 6) — because they're needed
 to make each vertical slice complete and testable in isolation.
-
+### Phase 4 — Custom PermissionEvaluator — ✅ complete
+- `UserRepository.findPermissionNamesByUsername()` — JPQL query joining
+  UserRole → Role → RolePermission → Permission for a given username
+- `CustomPermissionEvaluator implements PermissionEvaluator` — hasPermission()
+  overload used; second overload throws UnsupportedOperationException
+  (unreachable, not handled in GlobalExceptionHandler — intentional)
+- `MethodSecurityExpressionHandler` bean registered in `AppConfig`,
+  `@EnableMethodSecurity` added
+- `@PreAuthorize("hasPermission(null, 'PERMISSION_NAME')")` added to all
+  5 endpoints (roles, permissions, role-permission assign, user-role
+  assign, /secure-data)
+- `data.sql` seeds one admin user + ADMIN role + all 5 permissions, for
+  reproducible testing on every restart (`defer-datasource-initialization: true`
+  required in application.yml)
+- **Verified end-to-end via real API calls**: all 5 endpoints return
+  correct success responses with valid admin credentials
+- `RoleControllerSecurityTest` (MockMvc, full Spring context) — proves
+  @PreAuthorize rejects unauthenticated requests (401) and allows
+  correctly-credentialed ones (201/200), on top of existing service-layer
+  unit tests
+- 
 ### Global infrastructure (pulled forward from Phase 6) — ✅ complete
 - `ApiErrorResponse` DTO: timestamp, status, error, message (list), path
 - `GlobalExceptionHandler` (`@RestControllerAdvice`) with handlers for:
